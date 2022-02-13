@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Etch A Sketch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@800&family=Nunito:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>ETCH A SKETCH PROJECT</h1>
+    <div class="control">
+    <button class="start" onclick="start()">Start</button>
+    <button class="reset">Reset</button>
+    </div>
+    <div class="canvas"></div>
+  
+<script>
+//selecting canvas div
+const container = document.querySelector(".canvas");
+
+function makeGrid(size) {
+    for (let i=1; i<size+1; i++) {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        row.classList.add(`row${i}`);
+        row.style.cssText = "border-style: solid ;border-color: #f3f2f2; display: flex; flex: 1;border-width: 0";
+        container.appendChild(row);
+        makeColumn(i, size);
+}};
+
+function makeColumn(i, size) {
+        for (let x=1; x<size+1; x++) {
+        const rowContainer = document.querySelector(`.row${i}`);
+        const column = document.createElement("div");
+        column.classList.add("column");
+        column.classList.add(`column${x}`);
+        column.style.cssText = "border: 0.5px solid #f3f2f2; flex: 1;";
+        rowContainer.appendChild(column);
+    }
+};
+
+
+//add event listener
+function resetButton () {
+    const reset = document.querySelector(".reset");
+    reset.addEventListener('click', () => location.reload());
+}
+
+function changeColor(color){
+    const pixels = document.querySelectorAll(".column");
+    pixels.forEach((pixel) => {
+    pixel.addEventListener('mouseenter', function(event) {
+        event.target.style.backgroundColor = `${color}`;
+    });
+});
+}
+
+//call the function to make a grid
+
+function start() {
+    let size = parseInt(prompt("Please enter grid size: "));
+    makeGrid(size);
+    changeColor("yellow");
+    resetButton();
+}
+
+</script>
+</body>
+</html>
